@@ -1,0 +1,46 @@
+when clk come
+state 		<= state_nxt;
+conv_enable <= conv_enable_nxt;
+sum_enable 	<= sum_enable_nxt;
+sum_enable1 <= sum_enable1_nxt;
+out_enable 	<= out_enable_nxt;
+out_valid 	<= out_valid_nxt;
+out_data 	<= out_data_nxt;
+
+v_cnt <= v_cnt_nxt;
+
+counter 	 <= counter_nxt;
+conv_counter <= conv_counter_nxt;
+conv_sum     <= conv_sum_nxt;
+
+filter_size_reg	<=	filter_size_reg_nxt;
+pad_mode_reg 	<=	pad_mode_reg_nxt;
+act_mode_reg 	<=	act_mode_reg_nxt;
+image_size_reg	<=	image_size_reg_nxt;
+
+conv_result_A 5x5
+filter 5x5
+image_in 5x5
+image_buffer 5x12
+
+conv_result [0~5]
+conv_result_B
+
+when combinational
+conv_result_A 5x5
+filter 5x5
+image_in 5x5      => fill zero
+image_buffer 5x12
+counter+1
+conv_counter+1
+
+IDLE
+v_cnt=0
+
+
+
+conv_enable
+filter_size
+(image_size_reg >= 5 && 
+v_cnt == image_size_reg + 2 &&
+ conv_counter == 2)
